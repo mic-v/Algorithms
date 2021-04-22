@@ -1,12 +1,14 @@
 #ifndef SINGLY_LINKED_LIST_GUARD
 #define SINGLY_LINKED_LIST_GUARD
 
+#include <iostream>
+using namespace std;
+
 class LinkedList {
 
 private:
     struct node {
-        node(int x_) : x(x_) {}
-        int x;
+        int data;
         node* next;
     };
 
@@ -19,29 +21,22 @@ public:
 
     void push(int x) 
     {
-        if(head_ == nullptr) 
-        {
-            head_ = new node(x);
-            head_ = tail_;
-        }
-        else 
-        {
-            node* temp = new node(x);
-            temp->next = head_;
-            head_ = temp;
-        }
+        node* temp = new node;
+        temp->data = x;
+        temp->next = head_;
+        head_ = temp;
         size_++;
     }
     void push_back(int x) 
     {
         if(empty())
         {
-            head_ = new node(x);
+            head_ = new node;
             head_ = tail_;
         }
         else
         {
-            node* temp = new node(x);
+            node* temp = new node;
             tail_->next = temp;
         }
         size_++;
@@ -51,14 +46,22 @@ public:
         if(head_ == nullptr)
             return;
         
-        node* temp = head_->next;
-        head_ = temp;
-        delete head_;
+        node* temp = head_;
+        head_ = head_->next;
+        delete temp;
     }
 
     void print()
     {
-        
+        auto temp = head_;
+        if(temp == nullptr) {
+            std::cout << "empty";
+        }
+        while(temp != nullptr) {
+            std::cout << temp->data << " ";
+            temp = temp->next;
+         }
+         std::cout << "\n";
     }
 
 private:
